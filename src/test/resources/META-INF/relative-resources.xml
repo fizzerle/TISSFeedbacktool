@@ -1,0 +1,7 @@
+<relative-resources>
+    <libraries>
+        <library name="global"/>
+        <library name="jtiss"/>
+    </libraries>
+</relative-resources>
+

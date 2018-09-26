@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- COPIED FROM JSHOWCASE-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <ul>
+            <li>
+                <span>
+                    <h:link outcome="/feedbackToolHome" value="#{mmsg.feedbacktoolHome}" styleClass="supNavMenuHeader"/>
+                </span>
+                <ul class="linkBlock">
+                    <li>
+                        <span>
+                            <h:link outcome="/contractor" value="#{mmsg.questionare}" styleClass="supNavMenuHeader"/>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <h:link outcome="/evaluation" value="#{mmsg.evaluation}" styleClass="supNavMenuHeader"/>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+
+            <!--
+            <li>
+                <span>
+                    <h:outputLink value="#" styleClass="supNavMenuHeader">
+                        <h:outputText value="menu link"/>
+                    </h:outputLink>
+                </span>
+                <ul class="linkBlock">
+                    <li>
+                        <span>
+                            <h:outputLink value="#" styleClass="supNavMenuHeader">
+                                <h:outputText value="submenu link"/>
+                            </h:outputLink>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+             -->
+        </ul>
+       
+    </ui:composition>
+</html>

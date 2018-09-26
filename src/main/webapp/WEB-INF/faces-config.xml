@@ -1,0 +1,36 @@
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+      http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>
+
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>de</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+
+        <message-bundle>ErrMessages</message-bundle>
+
+        <!-- resource bundle which will get used for i18n -->
+        <resource-bundle>
+            <base-name>Messages</base-name>
+            <var>amsg</var>
+        </resource-bundle>
+
+        <resource-bundle>
+            <base-name>MenuMessages</base-name>
+            <var>mmsg</var>
+        </resource-bundle>
+
+        <!-- resource bundle for version info and other showcase messages -->
+        <resource-bundle>
+            <base-name>Feedback</base-name>
+            <var>smsg</var>
+        </resource-bundle>
+
+    </application>
+
+</faces-config>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- COPIED FROM JSHOWCASE-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<f:view locale="#{settings.locale}"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+        <!--xmlns:tiss="http://at.ac.tuwien.tiss.faces">-->
+
+    <!--<h:outputScript library="jtiss" name="js/myfaces_config.js"/>-->
+    <!--<h:outputScript library="jtiss" name="js/windowId.js"/>-->
+    <!--<script type="TEXT/javascript">//<![CDATA[-->
+        <!--assertWindowId()-->
+    <!--//]]></script>-->
+    <!--<ui:insert name="activeMenu">#{menu.activateMenuItem(activeMenu)}</ui:insert>-->
+
+    <h:head>
+        <link href="#{resource['global:images/favicon.ico']}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+        <link rel="apple-touch-icon" href="#{resource['global:images/mobile/apple-touch-icon-precomposed.png']}" />
+
+        <link href="#{resource['global:css/reset.css']}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="#{resource['global:css/basic.css']}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="#{resource['global:css/content.css']}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="#{resource['global:css/widgets.css']}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="#{resource['global:css/print.css']}" rel="stylesheet" type="text/css" media="print"/>
+        <link href="#{resource['global:css/mobile.css']}" rel="stylesheet" type="text/css" media="all" id="mobileCss"/>
+
+        <ui:insert name="header"/>
+
+        <title><h:outputText value="#{appSettings.applicationName} "/><ui:insert name="title"/></title>
+
+        <meta id="desktopMeta" name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=2.5, user-scalable=yes" />
+    </h:head>
+    <ui:insert name="metadata"/>
+
+
+    <h:body class="#{(skin==null) ? 'lehre' : skin} #{settings.locale.language}">
+        <div id="glow_left"></div>
+        <div id="glow_right"></div>
+        <div id="wrapper">
+            <div id="header">
+                <div id="headerInnerWrapper">
+                    <div id="headerInner">
+                        <div id="headerLeft">
+                            <div id="headerLeftInside">
+                                <div id="logo">
+                                    <h1><a href="/"/></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="headerCenter">
+                            <div id="headerCenterInside">
+                                <div id="paperHead">
+                                    <h:form id="toolNavForm">
+                                        <ul class="clearfix toolNav">
+                                            <h:panelGroup rendered="#{security.authenticated}">
+                                                <li>
+                                                    <!--  not used in jShowcase
+                                                    <h:outputLink styleClass="toolHome" value="/">
+                                                        <h:outputText id="username" value="#{security.name}"/>
+                                                    </h:outputLink>
+                                                    -->
+                                                    <h:link styleClass="toolHome" outcome="/feedbackToolHome.xhtml" value=""/>
+                                                </li>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{not security.authenticated}">
+                                                <li>
+                                                    <h:panelGroup styleClass="toolHome" id="homeIcon"/>
+                                                </li>
+                                            </h:panelGroup>
+                                            <li>
+                                                <h:link id="language_de"
+                                                        rendered="#{settings.locale.language ne 'de'}"
+                                                        includeViewParams="true">
+                                                    <span>Deutsch</span>
+                                                    <f:param name="locale" value="de"/>
+                                                </h:link>
+                                                <h:link id="language_en"
+                                                        includeViewParams="true"
+                                                        rendered="#{settings.locale.language ne 'en'}">
+                                                    <f:param name="locale" value="en"/>
+                                                    <span>English</span>
+                                                </h:link>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <h:outputLink rendered="#{not empty helpPath}" value="/hilfelink/tiss/#{helpPath}" target="_blank">#{cmsg.help}</h:outputLink>
+                                                    <h:outputLink rendered="#{empty helpPath}" value="/hilfe/" target="_blank">#{cmsg.help}</h:outputLink>
+                                                </span>
+                                            </li>
+                                            <!--  not used in jShowcase
+                                            <h:panelGroup rendered="#{security.authenticated}">
+                                                <li class="rightAlign">
+                                                    <h:outputLink id="logoutLink" value="#{security.logoutEntryPoint}">
+                                                        <span class="toolLogout">Logout</span>
+                                                    </h:outputLink>
+                                                </li>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{not security.authenticated}">
+                                                <li class="rightAlign">
+                                                    <h:outputLink value="#{security.loginEntryPoint}">
+                                                        <span class="toolLogin">Login</span>
+                                                    </h:outputLink>
+                                                </li>
+                                            </h:panelGroup>
+                                            -->
+                                        </ul>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="headerRight">
+                            <div id="tuLogo"><a href="http://www.tuwien.ac.at"></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="contentWrapper" >
+                <div id="supNav">
+                    <div id="supNavHeaderWrapper">
+                        <div id="supNavHeader">
+                            <div id="supNavHeaderStroke"></div>
+                            <div id="supNavHeading"></div>
+                        </div>
+                        <div id="shadow_top"></div>
+                    </div>
+                    <div id="supNavBody">
+                        <!--<tiss:menu menuItems="#{menu.getChildren(skin)}" activeMenu="#{menu.activeMenuItem}"/>-->
+                        <!-- the 'old' menu <ui:include src="menu.xhtml"/> -->
+                        <ui:include src="menu.xhtml"/>
+                    </div>
+                </div>
+                <div id="mainNav">
+                    <div>
+                        <a id="lehreLink" href="/">Lehre</a>
+                        <a id="forschungLink" href="/">Forschung</a>
+                        <a id="organisationLink" href="/">Organisation</a>
+                    </div>
+                </div>
+                <h:panelGroup id="content" layout="block">
+                    <div id="contentInnerWrapper" class="clearfix">
+                        <div id="contentInner">
+                            <ui:insert name="headerTemplate">
+                                <ui:decorate template="headerTemplate.xhtml">
+                                </ui:decorate>
+                            </ui:insert>
+                            <ui:insert name="content"/>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </div>
+            <div id="footer">
+                <div id="footerContent">
+                    <div id="footer-left"></div>
+                    <div id="footer-right"></div>
+                    <div id="pageEnd"></div>
+                    <!-- <div id="siteLinks" class="clearfix"></div> -->
+                </div>
+                <div id="footerShadow">
+                    <div id="footerShadow-left"></div>
+                    <div id="footerShadow-right"></div>
+                    <div id="baseLinks">
+                        <a href="/">Support</a>
+                        |
+                        <a href="http://www.zid.tuwien.ac.at/regelungen/">Policies</a>
+                        |
+                        <a href="/">Legal Notice</a>
+                    </div>
+                    <div id="legalInfo">
+                        Technische Universität Wien – Karlsplatz 13 | A-1040 Wien | Tel. +43/(0)1/58801-0 | Fax +43/(0)1/58801-41099
+                        <br/><h:outputText styleClass="versionInfo" value="#{smsg['feedbackTool.version']}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
+    </h:body>
+</f:view>
+</html>

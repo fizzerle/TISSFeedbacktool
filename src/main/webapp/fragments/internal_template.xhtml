@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- COPIED FROM JSHOWCASE-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+<ui:composition template="/fragments/lehre.xhtml">
+	<ui:define name="header">
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <ui:insert name="examplesHeader"/>
+	</ui:define>
+	
+	<ui:define name="content">
+        <ui:insert name="content"/>
+    </ui:define>	
+</ui:composition>
+</html>

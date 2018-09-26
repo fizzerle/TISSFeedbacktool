@@ -1,0 +1,20 @@
+{"Scala Questions":
+  [
+    "Ich war mit der Servicegeschwindigkeit zufrieden",
+    "Ich war mit der Freundlichkeit des Dienstleisters zufrieden",
+    "Ich war mit der Sachkompetenz des Dienstleisters zufrieden",
+    "Die Anfrage war Komplex",
+    "Der Dienstleister war nützlich für das Anliegen"
+  ]
+  ,"Additional Information":
+  [
+    "Referenz zum Geschäftsfall",
+    "Name",
+    "Kontaktadresse",
+    "Funktion"
+  ]
+  ,"Free text Questions":
+  [
+    "Freitext"
+  ]
+}

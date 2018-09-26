@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="fragments/internal_template.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{amsg.headingQuestionnaire}"/>
+    </ui:define>
+    <ui:define name="contentHeader">
+        <h:outputText styleClass="light" value="#{amsg.feedbackToolHeading}"/>
+        <h:outputText value="#{amsg.questionnaire}"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="testForm">
+            <div class="tableCaption">1. #{amsg.headingRequiredQuestions}</div>
+            <p:dataTable var="requiredAnswers" value="#{questionnaireModel.requiredAnswers}">
+                <p:column style="width: 90%;">
+                    <f:facet name="header">
+                        <h:outputText value="#{amsg.headingRequiredQuestions}"/>
+                    </f:facet>
+                    <h:outputText value="#{requiredAnswers.question.text}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <div style="white-space: normal;">
+                            <div style="text-align: left; width: 45%; float: left;">#{amsg.stronglyAgree}
+                            </div>
+                            <div style="text-align: right; float: right; width: 45%;"> #{amsg.stronglyDisagree}
+                            </div>
+                        </div>
+                    </f:facet>
+                    <h:selectOneRadio id="radioButtonAnswer" value="#{requiredAnswers.text}" styleClass="noBorder">
+                        <f:selectItem itemValue="0" itemLabel=""/>
+                        <f:selectItem itemValue="1" itemLabel=""/>
+                        <f:selectItem itemValue="2" itemLabel=""/>
+                        <f:selectItem itemValue="3" itemLabel=""/>
+                        <f:selectItem itemValue="4" itemLabel=""/>
+                    </h:selectOneRadio>
+                </p:column>
+            </p:dataTable>
+            <fieldset>
+                <legend>#{amsg.headingOptionalQuestions}</legend>
+                <ul>
+                    <ui:repeat value="#{questionnaireModel.optionalAnswers}" var="answer">
+                        <li>
+                            <h:outputLabel for="optionalQuestion" value="#{answer.question.text}"/>
+                            <h:inputText id="optionalQuestion" value="#{answer.text}" styleClass="mediumInput"/>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </fieldset>
+
+            <fieldset>
+                <legend>#{amsg.headingFreeTextQuestions}</legend>
+                <ul>
+                    <ui:repeat value="#{questionnaireModel.freeTextAnswers}" var="answer">
+                        <li>
+                            <h:outputLabel for="freetext" value="#{answer.question.text} (optional)"/>
+                            <h:inputTextarea id="freetext" rows="5" value="#{answer.text}"
+                                             styleClass="xLargeInput"/>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </fieldset>
+
+            <ul class="styledCommandBox">
+                <li>
+                    <h:commandButton value="#{amsg.b_send}" action="#{questionnaireModel.actionSubmit}">
+                    </h:commandButton>
+                </li>
+                <li>
+                    <h:commandButton value="Generate Random Feedback"
+                                     action="#{questionnaireModel.generateRandomFeedback(50)}">
+                    </h:commandButton>
+                </li>
+            </ul>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>
