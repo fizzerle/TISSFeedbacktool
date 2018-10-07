@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The class provides the model for the questionnaire part
@@ -175,7 +176,7 @@ public class QuestionnaireModel implements Serializable {
 
     public void generateRandomFeedback(int feedbackcount) {
         for (int j = 0; j < feedbackcount; j++) {
-            client.setUsername("User " + j);
+            client.setUsername("User " + UUID.randomUUID());
             for (Answer answer : requiredAnswers) {
                 answer.setText(((int) (Math.random() * 5)) + "");
             }
