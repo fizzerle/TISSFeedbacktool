@@ -19,7 +19,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.faces.application.FacesMessage;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -58,46 +60,49 @@ public class QuestionModelTests {
     public void testLoadQuestionsFromJsonNotEveryQuestionsHasTranslation() throws Exception{
         PowerMockito.mockStatic(JsfUtil.class);
         PowerMockito.when(JsfUtil.getCurrentClassLoader(any())).thenCallRealMethod();
-        PowerMockito.when(FeedbacktoolUtil.readQuestionsFromFile(any(String.class))).thenReturn("{\"Scala Questions\":\n" +
-                "[\n" +
-                "  \"Ich war mit der Servicegeschwindigkeit zufrieden\",\n" +
-                "  \"Ich war mit der Freundlichkeit des Dienstleisters zufrieden\",\n" +
-                "  \"Ich war mit der Sachkompetenz des Dienstleisters zufrieden\",\n" +
-                "  \"Die Anfrage war Komplex\"\n" +
-                "]\n" +
-                ",\"Additional Information\":\n" +
-                "[\n" +
-                "  \"Referenz zum Geschäftsfall\",\n" +
-                "  \"Name\",\n" +
-                "  \"Kontaktadresse\",\n" +
-                "  \"Funktion\"\n" +
-                "]\n" +
-                ",\"Free text Questions\":\n" +
-                "[\n" +
-                "  \"Freitext\"\n" +
-                "]\n" +
-                "}\n","{\"Scala Questions\":\n" +
-                "[\n" +
-                "  \"I was satisfied with the speed of service\",\n" +
-                "  \"I was satisfied with the friendliness of the contractor\",\n" +
-                "  \"I was satisfied with the professional competence of the contractor\",\n" +
-                "  \"The enquiry was complex\",\n" +
-                "  \"The contractor was helpful for the concern\"\n" +
-                "]\n" +
-                ",\"Additional Information\":\n" +
-                "[\n" +
-                "  \"Reference to the business case\",\n" +
-                "  \"Name\",\n" +
-                "  \"Contact address\",\n" +
-                "  \"Function\"\n" +
-                "]\n" +
-                ",\"Free text Questions\":\n" +
-                "[\n" +
-                "  \"Free text\"\n" +
-                "]\n" +
-                "}\n");
 
-        questionModel.loadQuestionsFromJson();
+        PowerMockito.when(FeedbacktoolUtil.readFromInputStream(any(InputStream.class))).thenReturn("" +
+                "[\n" +
+                "  {\n" +
+                "    \"language\": \"de\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"Ich war mit der Servicegeschwindigkeit zufrieden\",\n" +
+                "      \"Ich war mit der Freundlichkeit des Dienstleisters zufrieden\",\n" +
+                "      \"Ich war mit der Sachkompetenz des Dienstleisters zufrieden\",\n" +
+                "      \"Die Anfrage war Komplex\",\n" +
+                "      \"Der Dienstleister war nützlich für das Anliegen\"\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Referenz zum Geschäftsfall\",\n" +
+                "      \"Name\",\n" +
+                "      \"Kontaktadresse\",\n" +
+                "      \"Funktion\"\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Freitext\"\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"language\": \"en\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"I was satisfied with the speed of service\",\n" +
+                "      \"I was satisfied with the friendliness of the contractor\",\n" +
+                "      \"I was satisfied with the professional competence of the contractor\",\n" +
+                "      \"The contractor was helpful for the concern\"\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Reference to the business case\",\n" +
+                "      \"Name\",\n" +
+                "      \"Contact address\",\n" +
+                "      \"Function\"\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Free text\"\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]\n");
+
+        questionModel.loadQuestionsFromJson(new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8)));
 
         PowerMockito.verifyStatic(Mockito.times(1));
         JsfUtil.addStatusMessage(eq(FacesMessage.SEVERITY_ERROR),anyString(),any(Locale.class),anyString(),Matchers.anyVararg());
@@ -110,47 +115,48 @@ public class QuestionModelTests {
     public void testLoadQuestionsFromJsonWrongJsonSyntax() throws Exception{
         PowerMockito.mockStatic(JsfUtil.class);
         PowerMockito.when(JsfUtil.getCurrentClassLoader(any())).thenCallRealMethod();
-        PowerMockito.when(FeedbacktoolUtil.readQuestionsFromFile(any(String.class))).thenReturn("{\"Scala Questions\":\n" +
-                "[\n" +
-                "  \"Ich war mit der Servicegeschwindigkeit zufrieden\",\n" +
-                "  \"Ich war mit der Freundlichkeit des Dienstleisters zufrieden\",\n" +
-                "  \"Ich war mit der Sachkompetenz des Dienstleisters zufrieden\",\n" +
-                "  \"Die Anfrage war Komplex\",\n" +
-                "  \"Der Dienstleister war nützlich für das Anliegen\"\n" +
-                "]\n" +
-                ",\"Additional Information\":\n" +
-                "[\n" +
-                "  \"Referenz zum Geschäftsfall\",\n" +
-                "  \"Name\",\n" +
-                "  \"Kontaktadresse\",\n" +
-                "  \"Funktion\"\n" +
-                "]\n" +
-                ",\"Free text Questions\":\n" +
-                "[\n" +
-                "  \"Freitext\"\n" +
-                "\n" +
-                "}\n","{\"Scala Questions\":\n" +
-                "[\n" +
-                "  \"I was satisfied with the speed of service\",\n" +
-                "  \"I was satisfied with the friendliness of the contractor\",\n" +
-                "  \"I was satisfied with the professional competence of the contractor\",\n" +
-                "  \"The enquiry was complex\",\n" +
-                "  \"The contractor was helpful for the concern\"\n" +
-                "]\n" +
-                ",\"Additional Information\":\n" +
-                "[\n" +
-                "  \"Reference to the business case\",\n" +
-                "  \"Name\",\n" +
-                "  \"Contact address\",\n" +
-                "  \"Function\"\n" +
-                "]\n" +
-                ",\"Free text Questions\":\n" +
-                "[\n" +
-                "  \"Free text\"\n" +
-                "]\n" +
-                "}\n");
+        PowerMockito.when(FeedbacktoolUtil.readFromInputStream(any(InputStream.class))).thenReturn("[\n" +
+                "  \n" +
+                "    \"language\": \"de\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"Ich war mit der Servicegeschwindigkeit zufrieden\",\n" +
+                "      \"Ich war mit der Freundlichkeit des Dienstleisters zufrieden\",\n" +
+                "      \"Ich war mit der Sachkompetenz des Dienstleisters zufrieden\",\n" +
+                "      \"Die Anfrage war Komplex\",\n" +
+                "      \"Der Dienstleister war nützlich für das Anliegen\"\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Referenz zum Geschäftsfall\",\n" +
+                "      \"Name\",\n" +
+                "      \"Kontaktadresse\",\n" +
+                "      \"Funktion\"\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Freitext\"\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"language\": \"en\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"I was satisfied with the speed of service\",\n" +
+                "      \"I was satisfied with the friendliness of the contractor\",\n" +
+                "      \"I was satisfied with the professional competence of the contractor\",\n" +
+                "      \"The enquiry was complex\",\n" +
+                "      \"The contractor was helpful for the concern\"\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Reference to the business case\",\n" +
+                "      \"Name\",\n" +
+                "      \"Contact address\",\n" +
+                "      \"Function\"\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Free text\"\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]\n");
 
-        questionModel.loadQuestionsFromJson();
+        questionModel.loadQuestionsFromJson(new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8)));
 
         PowerMockito.verifyStatic(Mockito.times(1));
         JsfUtil.addStatusMessage(eq(FacesMessage.SEVERITY_ERROR),anyString(),any(Locale.class),anyString(),Matchers.anyVararg());
@@ -162,10 +168,42 @@ public class QuestionModelTests {
     @Test
     public void testLoadQuestionsFromJson() throws Exception{
         PowerMockito.when(FeedbacktoolUtil.readQuestionsFromFile(any(String.class))).thenCallRealMethod();
-        PowerMockito.when(FeedbacktoolUtil.readFromInputStream(any(InputStream.class))).thenCallRealMethod();
         PowerMockito.mockStatic(JsfUtil.class);
         PowerMockito.when(JsfUtil.getCurrentClassLoader(any())).thenCallRealMethod();
-        questionModel.loadQuestionsFromJson();
+        PowerMockito.when(FeedbacktoolUtil.readFromInputStream(any(InputStream.class))).thenReturn("[\n" +
+                "  {\n" +
+                "    \"language\": \"de\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"Ich war mit der Servicegeschwindigkeit zufrieden\",\n" +
+                "      \"Ich war mit der Freundlichkeit des Dienstleisters zufrieden\",\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Referenz zum Geschäftsfall\",\n" +
+                "      \"Name\",\n" +
+                "      \"Kontaktadresse\",\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Freitext\"\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"language\": \"en\",\n" +
+                "    \"Scala Questions\": [\n" +
+                "      \"I was satisfied with the speed of service\",\n" +
+                "      \"I was satisfied with the friendliness of the contractor\",\n" +
+                "    ],\n" +
+                "    \"Additional Information\": [\n" +
+                "      \"Reference to the business case\",\n" +
+                "      \"Name\",\n" +
+                "      \"Contact address\",\n" +
+                "    ],\n" +
+                "    \"Free text Questions\": [\n" +
+                "      \"Free text\"\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]\n");
+
+        questionModel.loadQuestionsFromJson(new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8)));
         PowerMockito.verifyStatic(Mockito.times(0));
         JsfUtil.addStatusMessage(eq(FacesMessage.SEVERITY_ERROR),anyString(),any(Locale.class),anyString(),Matchers.anyVararg());
 

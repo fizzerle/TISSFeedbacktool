@@ -71,10 +71,11 @@ public class EvaluationModelTests {
         evaluationModel.createSummary(answersAddedUpPerContractor,allQuestions);
         Assert.assertEquals(2,evaluationModel.getSummaryQuestionItems().size());
 
-        Assert.assertEquals(1,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[0]);
-        Assert.assertEquals(3,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[1]);
-        Assert.assertEquals(4,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[2]);
-        Assert.assertEquals(4,evaluationModel.getSummaryQuestionItems().get(1).getCounts()[1]);
+
+        Assert.assertEquals(13,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[0]);
+        Assert.assertEquals(38,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[1]);
+        Assert.assertEquals(50,evaluationModel.getSummaryQuestionItems().get(0).getCounts()[2]);
+        Assert.assertEquals(100,evaluationModel.getSummaryQuestionItems().get(1).getCounts()[1]);
     }
 
     @Test

@@ -82,4 +82,12 @@ public class AccessControlDAO implements Serializable {
         updateAccessControlEntry.setParameter("timestamp", timestamp);
         updateAccessControlEntry.executeUpdate();
     }
+
+    /**
+     * Deletes all access control entries
+     */
+    public void deleteAllAccessControlEntries() {
+        Query deleteAll = em.createNativeQuery("DELETE FROM accesscontrol");
+        deleteAll.executeUpdate();
+    }
 }

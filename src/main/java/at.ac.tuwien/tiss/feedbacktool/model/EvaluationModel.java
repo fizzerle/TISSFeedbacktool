@@ -91,7 +91,19 @@ public class EvaluationModel implements Serializable {
             SummaryQuestionItem summaryQuestionItem = summaryQuestionItemsMap.get(answer.getQuestion().getId());
             summaryQuestionItem.getCounts()[Integer.parseInt(answer.getText())] = answer.getNumberOfPeopleWhoAnsweredThis();
         }
+
         summaryQuestionItems = new ArrayList<>(summaryQuestionItemsMap.values());
+        for (SummaryQuestionItem summaryQuestionItem : summaryQuestionItems) {
+            int overallCount = 0;
+            for (int count : summaryQuestionItem.getCounts()) {
+                overallCount += count;
+            }
+
+            for (int i = 0; i < summaryQuestionItem.getCounts().length; i++) {
+                summaryQuestionItem.getCounts()[i] = (int)Math.round((((double)summaryQuestionItem.getCounts()[i])/overallCount)*100);
+            }
+
+        }
     }
 
     /**
@@ -114,7 +126,6 @@ public class EvaluationModel implements Serializable {
             for (SummaryQuestionItem summaryQuestionItem : summaryQuestionItems) {
 
                 double count = summaryQuestionItem.getCounts()[i];
-                if (count == 0) count = 0.01;
                 question.set(JsfUtil.getMessageResourceString("Messages", userSettings.getLocale(), "chartDescriptionNumber") + summaryQuestionItem.getQuestionID(), count);
             }
             horizontalBarModel.addSeries(question);

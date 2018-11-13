@@ -1,0 +1,40 @@
+[
+  {
+    "language": "de",
+    "Scala Questions": [
+      "Ich war mit der Servicegeschwindigkeit zufrieden",
+      "Ich war mit der Freundlichkeit des Dienstleisters zufrieden",
+      "Ich war mit der Sachkompetenz des Dienstleisters zufrieden",
+      "Die Anfrage war Komplex",
+      "Der Dienstleister war nützlich für das Anliegen"
+    ],
+    "Additional Information": [
+      "Referenz zum Geschäftsfall",
+      "Name",
+      "Kontaktadresse",
+      "Funktion"
+    ],
+    "Free text Questions": [
+      "Freitext"
+    ]
+  },
+  {
+    "language": "en",
+    "Scala Questions": [
+      "I was satisfied with the speed of service",
+      "I was satisfied with the friendliness of the contractor",
+      "I was satisfied with the professional competence of the contractor",
+      "The enquiry was complex",
+      "The contractor was helpful for the concern"
+    ],
+    "Additional Information": [
+      "Reference to the business case",
+      "Name",
+      "Contact address",
+      "Function"
+    ],
+    "Free text Questions": [
+      "Free text"
+    ]
+  }
+]

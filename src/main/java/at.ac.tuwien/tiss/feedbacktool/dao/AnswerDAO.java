@@ -101,5 +101,13 @@ public class AnswerDAO implements Serializable {
         }
         return answersWithCount;
     }
+
+    /**
+     * Deletes all answers
+     */
+    public void deleteAllAnswers() {
+        Query deleteAll = em.createNativeQuery("DELETE FROM answers");
+        deleteAll.executeUpdate();
+    }
 }
 

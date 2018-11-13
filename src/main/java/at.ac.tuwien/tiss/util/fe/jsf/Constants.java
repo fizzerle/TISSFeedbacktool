@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Constants {
     // Properties (user configurable)
     public static final int WEEKS_BANNED = Integer.parseInt(Configurations.getProperty(Properties.WEEKS_BANNED));
-    public static final String JSON_FILENAME = Configurations.getProperty(Properties.JSON_FILENAME);
     public static final String CHART_COLORS = Configurations.getProperty(Properties.CHART_COLORS);
 
     // Constants (not user configurable)

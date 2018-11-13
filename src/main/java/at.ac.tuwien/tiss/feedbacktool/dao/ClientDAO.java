@@ -58,4 +58,12 @@ public class ClientDAO implements Serializable {
         return findClientByUsername.getResultList().size() == 1;
     }
 
+    /**
+     * Deletes all clients
+     */
+    public void deleteAllClients() {
+        Query deleteAll = em.createNativeQuery("DELETE FROM clients");
+        deleteAll.executeUpdate();
+    }
+
 }

@@ -111,4 +111,16 @@ public class QuestionDAO implements Serializable {
         return questions;
     }
 
+    /**
+     * Deletes all questions
+     */
+    public void deleteAllQuestions() {
+        Query deleteQuestionsTRAll = em.createNativeQuery("DELETE FROM questions_tr");
+        Query deleteAll = em.createNativeQuery("DELETE FROM questions");
+        Query resetQuestionNumber = em.createNativeQuery("ALTER SEQUENCE questions_id_seq RESTART WITH 1;");
+        deleteQuestionsTRAll.executeUpdate();
+        resetQuestionNumber.executeUpdate();
+        deleteAll.executeUpdate();
+    }
+
 }

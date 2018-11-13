@@ -15,6 +15,7 @@ import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -65,8 +66,9 @@ public class QuestionModel {
     /**
      * Loads all questions from a json file in multiple languages. If there are mistakes in the json file or not every
      * Question has a translation shows a error message
+     * @param inputStream The json File input stream
      */
-    public void loadQuestionsFromJson() {
+    public void loadQuestionsFromJson(InputStream inputStream) {
         initializeQuestions();
         Map<QuestionType, List<JSONArray>> jsonArrays = new HashMap<>();
         jsonArrays.put(QuestionType.SCALA, new LinkedList<JSONArray>());
@@ -75,29 +77,41 @@ public class QuestionModel {
         int numberOfScalaQuestions = 0;
         int numberOfAdditionalQuestions = 0;
         int numberOfFreetextQuestions = 0;
+        questionDAO.resetLatestQuestion();
+        String questionsJson = FeedbacktoolUtil.readFromInputStream(inputStream);
         for (int i = 0; i < availableLocales.size(); i++) {
-            questionDAO.resetLatestQuestion();
-            String questionsJson = FeedbacktoolUtil.readQuestionsFromFile(Constants.JSON_FILENAME + "_" + availableLocales.get(i).toString() + ".json");
             try {
-                JSONObject jsonObject = new JSONObject(questionsJson);
-                JSONArray currentScala = jsonObject.getJSONArray("Scala Questions");
-                JSONArray currentAdditional = jsonObject.getJSONArray("Additional Information");
-                JSONArray currentFreeText = jsonObject.getJSONArray("Free text Questions");
-                if (i != 0) {
-                    if (jsonArrays.get(QuestionType.SCALA).get(i - 1).length() != currentScala.length()
-                            || jsonArrays.get(QuestionType.TEXT).get(i - 1).length() != currentAdditional.length()
-                            || jsonArrays.get(QuestionType.TEXT_LONG).get(i - 1).length() != currentFreeText.length()) {
-                        JsfUtil.addStatusMessage(FacesMessage.SEVERITY_ERROR, "Messages", userSettings.getLocale(), "errorMessageJson");
-                        return;
+                JSONArray jsonArray = new JSONArray(questionsJson);
+                boolean languageDefined = false;
+                for(int n = 0; n < jsonArray.length(); n++)
+                {
+                    JSONObject questionsPerLanguage = jsonArray.getJSONObject(n);
+                    if(questionsPerLanguage.getString("language").equals(availableLocales.get(i).getLanguage())){
+                        languageDefined = true;
+                        JSONArray currentScala = questionsPerLanguage.getJSONArray("Scala Questions");
+                        JSONArray currentAdditional = questionsPerLanguage.getJSONArray("Additional Information");
+                        JSONArray currentFreeText = questionsPerLanguage.getJSONArray("Free text Questions");
+                        if (i != 0) {
+                            if (jsonArrays.get(QuestionType.SCALA).get(i - 1).length() != currentScala.length()
+                                    || jsonArrays.get(QuestionType.TEXT).get(i - 1).length() != currentAdditional.length()
+                                    || jsonArrays.get(QuestionType.TEXT_LONG).get(i - 1).length() != currentFreeText.length()) {
+                                JsfUtil.addStatusMessage(FacesMessage.SEVERITY_ERROR, "Messages", userSettings.getLocale(), "errorMessageJson");
+                                return;
+                            }
+                        } else {
+                            numberOfScalaQuestions = currentScala.length();
+                            numberOfAdditionalQuestions = currentAdditional.length();
+                            numberOfFreetextQuestions = currentFreeText.length();
+                        }
+                        jsonArrays.get(QuestionType.SCALA).add(currentScala);
+                        jsonArrays.get(QuestionType.TEXT).add(currentAdditional);
+                        jsonArrays.get(QuestionType.TEXT_LONG).add(currentFreeText);
                     }
-                } else {
-                    numberOfScalaQuestions = currentScala.length();
-                    numberOfAdditionalQuestions = currentAdditional.length();
-                    numberOfFreetextQuestions = currentFreeText.length();
                 }
-                jsonArrays.get(QuestionType.SCALA).add(currentScala);
-                jsonArrays.get(QuestionType.TEXT).add(currentAdditional);
-                jsonArrays.get(QuestionType.TEXT_LONG).add(currentFreeText);
+                if(languageDefined == false){
+                    JsfUtil.addStatusMessage(FacesMessage.SEVERITY_ERROR, "Messages", userSettings.getLocale(), "languageNotDefined", availableLocales.get(i));
+                    return;
+                }
             } catch (JSONException e) {
                 JsfUtil.addStatusMessage(FacesMessage.SEVERITY_ERROR, "Messages", userSettings.getLocale(), "errorMessageJsonParsing", e.getMessage());
                 return;

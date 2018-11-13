@@ -3,6 +3,7 @@
 <!-- COPIED FROM JSHOWCASE-->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <f:view locale="#{settings.locale}"
+        encoding="UTF-8"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -31,6 +32,7 @@
         <title><h:outputText value="#{appSettings.applicationName} "/><ui:insert name="title"/></title>
 
         <meta id="desktopMeta" name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=2.5, user-scalable=yes" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <ui:insert name="metadata"/>
 
