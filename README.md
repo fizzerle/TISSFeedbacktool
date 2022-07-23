@@ -1,9 +1,8 @@
 # Feedbacktool
 
-Die Docker Container können mit `docker-compose build` gebuildet werden und anschließen mit `docker-compose up` 
-ausgeführt werden.
+The Docker containers can be built with `docker-compose build` and then executed with `docker-compose up`. 
 
-Der Docker Container ist anschließend unter folgendem URL erreichbar: http://localhost:8888/feedbacktool/
+The Docker container is then accessible at the following URL: http://localhost:8888/feedbacktool/
 
-Nach dem Starten sollten zuerst Fragen aus der JSON Datei gelesen werden. Dazu geht man auf die Evaluationsseite und
-klickt auf den Button `Load Questions from JSON`. Danach kann der Fragebogen bereits ausgefüllt werden.
+After starting, questions should first be read from the JSON file. To do this, go to the evaluation page and
+click on the button `Load Questions from JSON`. After that the questionnaire can already be filled out.
