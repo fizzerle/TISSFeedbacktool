@@ -1,6 +1,7 @@
 # Feedbacktool
 This is a questionare tool build for the website of the TU Vienna. It contains a application where questions
-for a questionaire can be defined in a json file.
+for a questionaire can be defined in a json file. Technologies used **JAVA, JSF,
+PrimeFaces, Tomcat, PostgreSQL**
 
 Features:
 * Define questions for questionare in json format. To build mutliple questionaires
