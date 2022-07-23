@@ -9,3 +9,5 @@ The Docker container is then accessible at the following URL: http://localhost:8
 
 After starting, questions should first be read from the JSON file. To do this, go to the evaluation page and
 click on the button `Load Questions from JSON`. After that the questionnaire can already be filled out.
+
+![image](https://user-images.githubusercontent.com/14179713/180604967-8d47a5d3-584b-49b0-a23d-0eb3ec3cea68.png)
